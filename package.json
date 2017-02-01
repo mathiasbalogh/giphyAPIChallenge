@@ -1,0 +1,23 @@
+{
+  "name": "apipractice",
+  "version": "1.0.0",
+  "description": "giphy api retrieval",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "giphy",
+    "api"
+  ],
+  "author": "baloghmathias@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.6.1",
+    "body-parser": "^1.16.0",
+    "bootstrap": "^3.3.7",
+    "express": "^4.14.1",
+    "path": "^0.12.7",
+    "pg": "^6.1.2"
+  }
+}
