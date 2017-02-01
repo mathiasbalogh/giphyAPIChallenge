@@ -6,6 +6,8 @@ var app = angular.module('giphyApp', []);
 
     var API = 'http://api.giphy.com/v1';
     ctrl.imageUrl = ' ';
+    ctrl.searchQuery = ' ';
+    ctrl.searchGifs = [];
 
 ctrl.getRandomGif = function(){
 
@@ -24,6 +26,21 @@ ctrl.getRandomGif = function(){
   });
 }
 
+ctrl.searchForGif = function(){
+    $http({
+    method: 'GET',
+    url: API +'/gifs/search',
+    params:{
+        api_key: 'dc6zaTOxFJmzC',
+        q:ctrl.searchQuery
+      }
+  }).then(function(response){
+    console.log(response.data.data);
+    ctrl.searchGifs = response.data.data;
+  }).catch(function(err){
+    console.log('Error requesting data from server', err);
+  });
+}
 
 
 });

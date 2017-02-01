@@ -9,11 +9,19 @@
   <body ng-app="giphyApp">
     <main ng-controller="GiphyController as gif">
       <h1>Giphy API Generator</h1>
-      <p><button ng-click="gif.getRandomGif()">
-        Random
-      </button>
-      <img ng-src="{{gif.imageUrl}}"/>
-    </p>
+        <form>
+          <input type="text" placeholder="Search for a GIF" ng-model="gif.searchQuery"/>
+          <input type="submit" ng-click="gif.searchForGif()"/>
+          <button ng-click="gif.getRandomGif()">
+            Random
+          </button>
+        </form>
+      <p>
+        <img ng-src="{{gif.imageUrl}}"/>
+      </p>
+      <ul>
+        <li ng-repeat="giphy in gif.searchGifs"><img ng-src="{{giphy.images.downsized.url}}"/></li>
+      </ul>
 
     </main>
 
