@@ -5,22 +5,24 @@
     <title></title>
     <script src="/vendors/angular.min.js"></script>
     <script src="/scripts/app.js"></script>
+    <link rel="stylesheet" href="/vendors/bootstrap.min.css" />
+    <link rel="stylesheet" href="styles/styles.css"  />
   </head>
   <body ng-app="giphyApp">
-    <main ng-controller="GiphyController as gif">
-      <h1>Giphy API Generator</h1>
+    <main ng-controller="GiphyController as gif" class="container">
+      <h1 class="text-center">Giphy API Generator</h1>
         <form>
-          <input type="text" placeholder="Search for a GIF" ng-model="gif.searchQuery"/>
-          <input type="submit" ng-click="gif.searchForGif()"/>
-          <button ng-click="gif.getRandomGif()">
+          <input class="form-control" type="text" ng-model="gif.searchQuery" placeholder="Search"/>
+          <input class="btn-info pull-right"type="submit" ng-click="gif.searchForGif()"/>
+          <button class="btn-warning"ng-click="gif.getRandomGif()">
             Random
           </button>
         </form>
-      <p>
+      <p class="text-center">
         <img ng-src="{{gif.imageUrl}}"/>
       </p>
       <ul>
-        <li ng-repeat="giphy in gif.searchGifs"><img ng-src="{{giphy.images.downsized.url}}"/></li>
+        <li class="col-sm-4" ng-repeat="giphy in gif.searchGifs"><img ng-src="{{giphy.images.fixed_width.url}}"/></li>
       </ul>
 
     </main>
