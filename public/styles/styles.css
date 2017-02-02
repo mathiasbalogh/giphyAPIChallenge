@@ -11,7 +11,8 @@ img {
   border-radius: 10px;
 }
 body {
-  background-image: url(/images/galaxy1.jpg);
+  /*background-image: url(/images/galaxy1.jpg);*/
+  background-image: url(https://apod.nasa.gov/apod/image/1212/M33-Subaru-Gendler-LL.jpg);
   background-size:cover;
 }
 h1 {
