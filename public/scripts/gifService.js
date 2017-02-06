@@ -9,7 +9,7 @@ app.service('GifService', function($http){
   url: API +'/gifs/random',
   params:{
       api_key: 'dc6zaTOxFJmzC',
-      q:null
+      q:null,
     }
 }).then(function(response){
   console.log(response);
@@ -24,14 +24,46 @@ this.searchForGif = function(query){
     url: API +'/gifs/search',
     params:{
         api_key: 'dc6zaTOxFJmzC',
-        q:query
+        q:query,
+        limit:'1'
       }
   }).then(function(response){
     console.log(response.data.data);
-    return response.data.data;
+    return response.data.data[0].images.original.url;
   }).catch(function(err){
     console.log('Error requesting data from server', err);
   });
 }
 
+this.favoriteThisGif = function(imageUrl, commentF){
+  return $http({
+  method: 'POST',
+  url: '/favorite',
+  data: {
+    favUrl: imageUrl,
+    comment: commentF
+  }
+}).then(function(response){
+  console.log('Success');
+}).catch(function(err){
+  console.log('Error adding data from server', err);
 });
+}
+
+this.getFavoriteGifs = function(){
+  return $http({
+  method: 'GET',
+  url: '/favorite',
+}).then(function(response){
+  console.log('Success', response.data);
+  return response.data;
+}).catch(function(err){
+  console.log('Error adding data from server', err);
+});
+}
+
+// this.deleteFav = function(buttonID){
+//   return buttonID;
+// }
+
+});//end app.service

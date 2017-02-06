@@ -4,28 +4,23 @@
     <meta charset="utf-8">
     <title></title>
     <script src="/vendors/angular.min.js"></script>
+    <script src="/vendors/angular-route.min.js" charset="utf-8"></script>
     <script src="/scripts/app.js"></script>
     <script src="/scripts/gifService.js"></script>
-
     <link rel="stylesheet" href="/vendors/bootstrap.min.css" />
     <link rel="stylesheet" href="/styles/styles.css"  />
+    <base href="/" target="_blank">
   </head>
   <body ng-app="giphyApp">
     <main ng-controller="GiphyController as gif" class="container">
-      <h1 class="text-center">Giphy Galaxy</h1>
-        <form>
-          <input class="form-control" type="text" ng-model="gif.searchQuery" placeholder="Search"/>
-          <input class="btn-info pull-right"type="submit" ng-click="gif.searchForGif()"/>
-          <button class="btn-warning" ng-click="gif.getRandomGif()">
-            Random
-          </button>
-        </form>
-      <p class="text-center">
-        <img ng-src="{{gif.imageUrl}}"/>
-      </p>
-      <ul>
-        <li class="col-sm-4" ng-repeat="giphy in gif.searchGifs"><img ng-src="{{giphy.images.fixed_width.url}}"/></li>
-      </ul>
+      <header>
+        <h1 class="text-center">Giphy Galaxy</h1>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/favorites">Favorites<span> ({{gif.numOfFavs}})</span></a>
+        </nav>
+      </header>
+      <ng-view></ng-view>
 
     </main>
 

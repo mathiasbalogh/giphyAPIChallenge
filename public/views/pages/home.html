@@ -1,0 +1,17 @@
+<form>
+  <input class="form-control" type="text" ng-model="gif.searchQuery" placeholder="Search"/>
+  <input class="btn-info pull-right"type="submit" ng-click="gif.searchForGif()"/>
+  <button class="btn-warning" ng-click="gif.getRandomGif()">
+    Random
+  </button>
+</form>
+<ul class="text-center">
+  <li>
+    <img ng-src="{{gif.imageUrl}}"/><br>
+    <input type="textarea" placeholder="Comment here" ng-model="gif.comment"/>
+    <input type="submit" value="Favorite!" ng-click="gif.favoriteThisGif()"/>
+  </li>
+</ul>
+<!-- <ul>
+  <li class="col-sm-4" ng-repeat="giphy in gif.searchGifs"><img ng-src="{{giphy.images.fixed_width.url}}"/></li>
+</ul> -->

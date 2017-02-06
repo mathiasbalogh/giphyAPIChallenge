@@ -1,40 +1,62 @@
-var app = angular.module('giphyApp', []);
+var app = angular.module('giphyApp', ['ngRoute']);
+
+  app.config(function($routeProvider, $locationProvider){
+    $routeProvider.when('/', {
+      templateUrl: 'views/pages/home.html',
+      controller: 'GiphyController as gifCtrl'
+    }).when('/favorites', {
+      templateUrl: 'views/pages/favorites.html',
+      controller: 'GiphyController as gifCtrl'
+    });
+    $locationProvider.html5Mode(true);
+  });
 
   app.controller('GiphyController', function(GifService){
     console.log('controller loaded');
     var ctrl = this;
 
-
+    ctrl.comment = '';
     ctrl.imageUrl = ' ';
     ctrl.searchQuery = ' ';
-    ctrl.searchGifs = [];
+    ctrl.favGifs = [];
+    ctrl.numOfFavs = '';
+    ctrl.buttonID = '';
 
-// ctrl.getRandomGif = function(){
-//
-//     $http({
-//     method: 'GET',
-//     url: API +'/gifs/random',
-//     params:{
-//         api_key: 'dc6zaTOxFJmzC',
-//         q:null
-//       }
-//   }).then(function(response){
-//     console.log(response);
-//     ctrl.imageUrl = response.data.data.image_url;
-//   }).catch(function(err){
-//     console.log('Error requesting data from server', err);
-//   });
-// }
-  ctrl.getRandomGif = function(){
+    GifService.getRandomGif().then(function(gifUrl){
+      ctrl.imageUrl = gifUrl;
+    });
+
+    GifService.getFavoriteGifs().then(function(favArray){
+      ctrl.favGifs = favArray;
+      ctrl.numOfFavs = favArray.length;
+      console.log('this is the favArray', favArray);
+    });
+
+
+  ctrl.getRandomGif = function(){ //pull random gif url from the giphy api and display it on DOM
     GifService.getRandomGif().then(function(gifUrl){
       ctrl.imageUrl = gifUrl;
     });
   }
-  ctrl.searchForGif = function(){
+  ctrl.searchForGif = function(){ //query the giphy api for gifs based on input field entry
       GifService.searchForGif(ctrl.searchQuery).then(function(gifArray){
-        ctrl.searchGifs = gifArray;
+        ctrl.imageUrl = gifArray;
       });
   }
-
+  ctrl.favoriteThisGif = function(){ //query the giphy api for gifs based on input field entry
+      GifService.favoriteThisGif(ctrl.imageUrl, ctrl.comment).then(function(){
+        console.log('You favorited this Gif!');
+      });
+      GifService.getFavoriteGifs().then(function(favArray){
+        ctrl.favGifs = favArray;
+        ctrl.numOfFavs = favArray.length;
+        console.log('this is the favArray', favArray);
+      });
+  }
+  // ctrl.deleteFav = function(){
+  //   GifService.deleteFav(ctrl.buttonID).then(function(buttonID){
+  //     console.log(buttonID);
+  //   })
+  // }
 
 });

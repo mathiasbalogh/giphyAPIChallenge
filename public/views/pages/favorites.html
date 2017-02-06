@@ -1,0 +1,10 @@
+<h1>Favorites</h1>
+<ul>
+  <li ng-repeat="gif in gif.favGifs">
+    <img ng-src="{{gif.favurl}}"/>
+    <label for="comment">Comment:</label>
+    <input type="textarea" name="comment" value="{{gif.comment}}"/>
+    <!-- <button id="gif.id" class="btn-danger" ng-model="gif.buttonID" ng-click="deleteFav">Delete from Faves</button>
+    <button id="gif.id" class="btn-info" ng-model="gif.buttonID" ng-click="updateComment">Update your comment</button> -->
+  </li>
+</ul>
