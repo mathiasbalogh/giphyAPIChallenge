@@ -53,7 +53,7 @@ this.favoriteThisGif = function(imageUrl, commentF){
 this.getFavoriteGifs = function(){
   return $http({
   method: 'GET',
-  url: '/favorite',
+  url: '/favorite'
 }).then(function(response){
   console.log('Success', response.data);
   return response.data;
@@ -62,8 +62,32 @@ this.getFavoriteGifs = function(){
 });
 }
 
-// this.deleteFav = function(buttonID){
-//   return buttonID;
-// }
+this.deleteFav = function(buttonID){
+  console.log(buttonID);
+  return $http({
+  method: 'DELETE',
+  url: '/favorite/'+ buttonID
+}).then(function(response){
+  console.log('Success', response);
+  return response;
+}).catch(function(err){
+  console.log('Error deleting data from server', err);
+});
+}
+this.updateComment = function(gifID, commentF){
+  return $http({
+  method: 'PUT',
+  url: '/favorite',
+  data: {
+    id: gifID,
+    comment: commentF
+  }
+}).then(function(response){
+  console.log('Success');
+  return response;
+}).catch(function(err){
+  console.log('Error adding data from server', err);
+});
+}
 
 });//end app.service

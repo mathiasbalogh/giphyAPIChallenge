@@ -21,6 +21,7 @@ var app = angular.module('giphyApp', ['ngRoute']);
     ctrl.favGifs = [];
     ctrl.numOfFavs = '';
     ctrl.buttonID = '';
+    ctrl.updatedComment = '';
 
     GifService.getRandomGif().then(function(gifUrl){
       ctrl.imageUrl = gifUrl;
@@ -43,7 +44,7 @@ var app = angular.module('giphyApp', ['ngRoute']);
         ctrl.imageUrl = gifArray;
       });
   }
-  ctrl.favoriteThisGif = function(){ //query the giphy api for gifs based on input field entry
+  ctrl.favoriteThisGif = function(){
       GifService.favoriteThisGif(ctrl.imageUrl, ctrl.comment).then(function(){
         console.log('You favorited this Gif!');
       });
@@ -53,10 +54,24 @@ var app = angular.module('giphyApp', ['ngRoute']);
         console.log('this is the favArray', favArray);
       });
   }
-  // ctrl.deleteFav = function(){
-  //   GifService.deleteFav(ctrl.buttonID).then(function(buttonID){
-  //     console.log(buttonID);
-  //   })
-  // }
-
+  ctrl.deleteFav = function(buttonID){
+    GifService.deleteFav(buttonID).then(function(res){
+      console.log(res);
+    });
+    GifService.getFavoriteGifs().then(function(favArray){
+      ctrl.favGifs = favArray;
+      ctrl.numOfFavs = favArray.length;
+      console.log('this is the favArray', favArray);
+    });
+  }
+  ctrl.updateComment = function(gifID){
+    GifService.updateComment(gifID, ctrl.updatedComment).then(function(res){
+      console.log(res);
+    });
+    GifService.getFavoriteGifs().then(function(favArray){
+      ctrl.favGifs = favArray;
+      ctrl.numOfFavs = favArray.length;
+      console.log('this is the favArray', favArray);
+    });
+  }
 });

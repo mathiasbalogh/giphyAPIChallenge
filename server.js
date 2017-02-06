@@ -73,6 +73,50 @@ app.get('/favorite', function(req,res){
   });
 });
 
+app.delete('/favorite/:id', function(req,res){
+  console.log(req.params.id);
+  pool.connect(function(err, client, done){
+    if(err){
+      console.log('Error connecting to DB', err);
+      res.sendStatus(500);
+      done();
+    }else{
+      client.query('DELETE FROM favorite_gifs WHERE id = $1;', [req.params.id],
+        function(err, result){
+          done();
+          if(err){
+            console.log('Error deleting fav', err);
+            res.sendStatus(500);
+          }else{
+            res.sendStatus(204);
+          }
+        });
+    }
+  });
+});
+
+app.put('/favorite', function(req, res){
+    pool.connect(function(err, client, done){
+      if(err){
+        console.log('Error connecting to DB', err);
+        res.sendStatus(500);
+        done();
+      }else{
+        client.query('UPDATE favorite_gifs SET comment=$2 WHERE id=$1 RETURNING *',
+        [req.body.id, req.body.comment],
+          function(err, result){
+            done();
+            if(err){
+              console.log('Error updating book', err);
+              res.sendStatus(500);
+            }else{
+              res.send(result.rows);
+            }
+          });
+      }
+    });
+  });
+
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function() {
   console.log('Server listening on port', server.address().port);
